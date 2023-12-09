@@ -38,6 +38,8 @@ namespace PH.Game
     
     public class GameManager : MonoBehaviour
     {
+        private const string HighScoreKey = "highscore";
+
         public static GameManager Instance { get; private set; }
 
         [SerializeField] private TileBoard board;
@@ -45,19 +47,18 @@ namespace PH.Game
         [SerializeField] private TextMeshProUGUI scoreText;
         [SerializeField] private TextMeshProUGUI hiscoreText;
 
-        private int score;
-        public int Score => score;
+        private int _score;
+        public int Score => _score;
 
         private void Awake()
         {
-            Application.targetFrameRate = 60;
-            
-            if (Instance != null) {
+            if (Instance != null) 
                 DestroyImmediate(gameObject);
-            } else {
+            else 
                 Instance = this;
+
+            if (Instance == this)
                 DontDestroyOnLoad(gameObject);
-            }
         }
 
         private void Start()
@@ -67,22 +68,24 @@ namespace PH.Game
 
         public void NewGame()
         {
-            // reset score
             SetScore(0);
-            hiscoreText.text = LoadHiscore().ToString();
+            var cachedHighScore = LoadHighScore();
+            hiscoreText.text = cachedHighScore.ToString();
 
-            // hide game over screen
-            gameOver.alpha = 0f;
-            gameOver.interactable = false;
-
-            // update board state
+            HideGameOver();
             board.ClearBoard();
             board.CreateTile();
             board.CreateTile();
             board.enabled = true;
         }
 
-        public void GameOver()
+        private void HideGameOver()
+        {
+            gameOver.alpha = 0f;
+            gameOver.interactable = false;
+        }
+
+        public void ShowGameOver()
         {
             board.enabled = false;
             gameOver.interactable = true;
@@ -90,13 +93,13 @@ namespace PH.Game
             StartCoroutine(Fade(gameOver, 1f, 1f));
         }
 
-        private IEnumerator Fade(CanvasGroup canvasGroup, float to, float delay = 0f)
+        private static IEnumerator Fade(CanvasGroup canvasGroup, float to, float delay = 0f)
         {
             yield return new WaitForSeconds(delay);
 
-            float elapsed = 0f;
-            float duration = 0.5f;
-            float from = canvasGroup.alpha;
+            var elapsed = 0f;
+            var duration = 0.5f;
+            var from = canvasGroup.alpha;
 
             while (elapsed < duration)
             {
@@ -110,29 +113,29 @@ namespace PH.Game
 
         public void IncreaseScore(int points)
         {
-            SetScore(score + points);
+            SetScore(_score + points);
         }
 
         private void SetScore(int score)
         {
-            this.score = score;
+            _score = score;
             scoreText.text = score.ToString();
 
-            SaveHiscore();
+            SaveHighScore();
         }
 
-        private void SaveHiscore()
+        private void SaveHighScore()
         {
-            int hiscore = LoadHiscore();
-
-            if (score > hiscore) {
-                PlayerPrefs.SetInt("hiscore", score);
-            }
+            var highScore = LoadHighScore();
+            
+            if (_score > highScore) 
+                PlayerPrefs.SetInt(HighScoreKey, _score);
         }
 
-        private int LoadHiscore()
+
+        private static int LoadHighScore()
         {
-            return PlayerPrefs.GetInt("hiscore", 0);
+            return PlayerPrefs.GetInt(HighScoreKey, 0);
         }
 
     }

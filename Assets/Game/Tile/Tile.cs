@@ -8,70 +8,71 @@ namespace PH.Game
     
     public class Tile : MonoBehaviour
     {
-        public TileState state { get; private set; }
-        public TileCell cell { get; private set; }
-        public bool locked { get; set; }
+        public TileState State { get; private set; }
+        public TileCell Cell { get; private set; }
+        public bool Locked { get; set; }
     
-        private Image background;
-        private TextMeshProUGUI text;
+        private Image _background;
+        private TextMeshProUGUI _text;
     
         private void Awake()
         {
-            background = GetComponent<Image>();
-            text = GetComponentInChildren<TextMeshProUGUI>();
+            _background = GetComponent<Image>();
+            _text = GetComponentInChildren<TextMeshProUGUI>();
         }
     
         public void SetState(TileState state)
         {
-            this.state = state;
+            State = state;
     
-            background.color = state.backgroundColor;
-            text.color = state.textColor;
-            text.text = state.number.ToString();
+            _background.color = state.backgroundColor;
+            _text.color = state.textColor;
+            _text.text = state.number.ToString();
         }
     
         public void Spawn(TileCell cell)
         {
-            if (this.cell != null) {
-                this.cell.tile = null;
+            if (Cell != null) 
+            {
+                Cell.Tile = null;
             }
     
-            this.cell = cell;
-            this.cell.tile = this;
+            Cell = cell;
+            Cell.Tile = this;
     
             transform.position = cell.transform.position;
         }
     
         public void MoveTo(TileCell cell)
         {
-            if (this.cell != null) {
-                this.cell.tile = null;
-            }
-    
-            this.cell = cell;
-            this.cell.tile = this;
+            if (Cell != null) 
+                Cell.Tile = null;
+
+            Cell = cell;
+            Cell.Tile = this;
     
             StartCoroutine(Animate(cell.transform.position, false));
         }
     
         public void Merge(TileCell cell, Action onMerge)
         {
-            if (this.cell != null) {
-                this.cell.tile = null;
+            if (Cell != null) 
+            {
+                Cell.Tile = null;
             }
     
-            this.cell = null;
-            cell.tile.locked = true;
+            Cell = null;
+            cell.Tile.Locked = true;
     
             StartCoroutine(Animate(cell.transform.position, true, onMerge));
         }
     
         private IEnumerator Animate(Vector3 to, bool merging, Action onMerge = null)
         {
-            float elapsed = 0f;
-            float duration = 0.1f;
+            var elapsed = 0f;
+            var duration = 0.1f;
     
-            Vector3 from = transform.position;
+            var from = transform.position;
     
             while (elapsed < duration)
             {

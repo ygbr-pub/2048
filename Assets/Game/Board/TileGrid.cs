@@ -4,40 +4,34 @@ namespace PH.Game
 
     public class TileGrid : MonoBehaviour
     {
-        public TileRow[] rows { get; private set; }
-        public TileCell[] cells { get; private set; }
+        public TileRow[] Rows { get; private set; }
+        public TileCell[] Cells { get; private set; }
 
-        public int Size => cells.Length;
-        public int Height => rows.Length;
+        public int Size => Cells.Length;
+        public int Height => Rows.Length;
         public int Width => Size / Height;
 
         private void Awake()
         {
-            rows = GetComponentsInChildren<TileRow>();
-            cells = GetComponentsInChildren<TileCell>();
+            Rows = GetComponentsInChildren<TileRow>();
+            Cells = GetComponentsInChildren<TileCell>();
 
-            for (int i = 0; i < cells.Length; i++) {
-                cells[i].coordinates = new Vector2Int(i % Width, i / Width);
-            }
+            for (var i = 0; i < Cells.Length; i++) 
+                Cells[i].Coordinates = new(i % Width, i / Width);
         }
 
-        public TileCell GetCell(Vector2Int coordinates)
-        {
-            return GetCell(coordinates.x, coordinates.y);
-        }
+        private TileCell GetCell(Vector2Int coordinates) => GetCell(coordinates.x, coordinates.y);
 
         public TileCell GetCell(int x, int y)
         {
-            if (x >= 0 && x < Width && y >= 0 && y < Height) {
-                return rows[y].cells[x];
-            } else {
-                return null;
-            }
+            if (x >= 0 && x < Width && y >= 0 && y < Height)
+                return Rows[y].Cells[x];
+            return null;
         }
 
         public TileCell GetAdjacentCell(TileCell cell, Vector2Int direction)
         {
-            Vector2Int coordinates = cell.coordinates;
+            var coordinates = cell.Coordinates;
             coordinates.x += direction.x;
             coordinates.y -= direction.y;
 
@@ -46,26 +40,22 @@ namespace PH.Game
 
         public TileCell GetRandomEmptyCell()
         {
-            int index = Random.Range(0, cells.Length);
-            int startingIndex = index;
+            var index = Random.Range(0, Cells.Length);
+            var startingIndex = index;
 
-            while (cells[index].Occupied)
+            while (Cells[index].Occupied)
             {
                 index++;
 
-                if (index >= cells.Length) {
+                if (index >= Cells.Length) 
                     index = 0;
-                }
 
                 // all cells are occupied
-                if (index == startingIndex) {
+                if (index == startingIndex)
                     return null;
-                }
             }
 
-            return cells[index];
+            return Cells[index];
         }
-
     }
-    
 }
