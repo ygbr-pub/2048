@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6da7eb619f13b9e438623a1594a8013d, type: 3}
-  m_Name: MintPastelle_64
+  m_Name: MintPastel_2
   m_EditorClassIdentifier: 
-  number: 64
-  backgroundColor: {r: 0.96862745, g: 0.73368376, b: 0.6780392, a: 1}
-  textColor: {r: 0.9764706, g: 0.9647059, b: 0.9490196, a: 1}
+  number: 2
+  backgroundColor: {r: 0.79431, g: 0.83, b: 0.79431, a: 1}
+  textColor: {r: 1, g: 1, b: 1, a: 1}
