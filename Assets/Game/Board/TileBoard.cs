@@ -126,13 +126,16 @@ namespace PH.Game
         private void MergeTiles(Tile a, Tile b)
         {
             tiles.Remove(a);
-            a.Merge(b.cell);
+            a.Merge(b.cell, OnMerge);
 
-            int index = Mathf.Clamp(IndexOf(b.state) + 1, 0, tileStates.Length - 1);
-            TileState newState = tileStates[index];
+            void OnMerge()
+            {
+                int index = Mathf.Clamp(IndexOf(b.state) + 1, 0, tileStates.Length - 1);
+                TileState newState = tileStates[index];
 
-            b.SetState(newState);
-            GameManager.Instance.IncreaseScore(newState.number);
+                b.SetState(newState);
+                GameManager.Instance.IncreaseScore(newState.number);
+            }
         }
 
         private int IndexOf(TileState state)

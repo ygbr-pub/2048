@@ -1,5 +1,6 @@
 namespace PH.Game
 {
+    using System;
     using System.Collections;
     using TMPro;
     using UnityEngine;
@@ -53,7 +54,7 @@ namespace PH.Game
             StartCoroutine(Animate(cell.transform.position, false));
         }
     
-        public void Merge(TileCell cell)
+        public void Merge(TileCell cell, Action onMerge)
         {
             if (this.cell != null) {
                 this.cell.tile = null;
@@ -62,10 +63,10 @@ namespace PH.Game
             this.cell = null;
             cell.tile.locked = true;
     
-            StartCoroutine(Animate(cell.transform.position, true));
+            StartCoroutine(Animate(cell.transform.position, true, onMerge));
         }
     
-        private IEnumerator Animate(Vector3 to, bool merging)
+        private IEnumerator Animate(Vector3 to, bool merging, Action onMerge = null)
         {
             float elapsed = 0f;
             float duration = 0.1f;
@@ -80,10 +81,12 @@ namespace PH.Game
             }
     
             transform.position = to;
-    
-            if (merging) {
-                Destroy(gameObject);
-            }
+
+            if (!merging) 
+                yield break;
+            
+            onMerge?.Invoke();
+            Destroy(gameObject);
         }
     
     }

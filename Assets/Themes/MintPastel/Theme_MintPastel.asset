@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Mint Pastel
   _palette:
-    BackgroundFill: {r: 1, g: 1, b: 1, a: 1}
-    LabelText: {r: 0.69704705, g: 0.79300004, b: 0.7702378, a: 0.9490196}
-    OverlayFill: {r: 0.74556863, g: 0.767686, b: 0.76862746, a: 1}
-    BoardFill: {r: 0.882353, g: 0.94117653, b: 0.8941177, a: 1}
+    BackgroundFill: {r: 0.909375, g: 0.97, b: 0.9215, a: 1}
+    LabelText: {r: 0.69704705, g: 0.79300004, b: 0.7702378, a: 1}
+    OverlayFill: {r: 0.9034694, g: 0.932, b: 0.932, a: 0.7294118}
+    BoardFill: {r: 0.89411765, g: 1, b: 0.9372549, a: 1}
     CellFill: {r: 0.8196079, g: 0.9058824, b: 0.8313726, a: 1}
     ScoreLabelText: {r: 0.882353, g: 0.94117653, b: 0.8941177, a: 1}
     ScoreValueText: {r: 1, g: 1, b: 1, a: 1}

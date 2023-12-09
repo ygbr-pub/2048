@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af49575e77d229419c25967c6dbfb82, type: 3}
   m_Name: Theme_Default
   m_EditorClassIdentifier: 
-  _name: 
+  _name: Default
   _palette:
     BackgroundFill: {r: 0.73333335, g: 0.6784314, b: 0.627451, a: 1}
     LabelText: {r: 0.46666667, g: 0.43137255, b: 0.39607844, a: 1}

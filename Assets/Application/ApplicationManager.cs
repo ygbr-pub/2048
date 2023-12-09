@@ -4,7 +4,7 @@
 
     public class ApplicationManager : MonoBehaviour
     {
-        [SerializeField] private int _targetFrameRate = 60;
+        [SerializeField] private int _targetFrameRate = 120;
 
         private void Awake()
         {

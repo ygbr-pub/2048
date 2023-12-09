@@ -6,7 +6,7 @@
     {
         private const float MinimumSwipeDistance = 30f;
         private const float MinGestureDuration = 0.05f;
-        private const float MaxGestureDuration = 0.25f;
+        private const float MaxGestureDuration = 0.75f;
 
         public enum SwipeGestures
         {
@@ -23,7 +23,7 @@
             var distance = Vector2.Distance(contactStart.Position, contactEnd.Position);
             var duration = contactEnd.Time - contactStart.Time;
             
-            // Invalid gesture if not a minimum distance or duration.
+            // Invalid gesture if not a minimum distance or valid duration.
             if (distance < MinimumSwipeDistance) return SwipeGestures.Invalid;
             if (duration < MinGestureDuration) return SwipeGestures.Invalid;
             if (duration > MaxGestureDuration) return SwipeGestures.Invalid;
