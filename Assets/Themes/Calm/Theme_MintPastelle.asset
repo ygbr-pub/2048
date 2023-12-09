@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8af49575e77d229419c25967c6dbfb82, type: 3}
+  m_Name: Theme_MintPastelle
+  m_EditorClassIdentifier: 
+  _name: Mint Pastel
+  _palette:
+    BackgroundFill: {r: 1, g: 1, b: 1, a: 1}
+    LabelText: {r: 0.69704705, g: 0.79300004, b: 0.7702378, a: 0.9490196}
+    OverlayFill: {r: 0.74556863, g: 0.767686, b: 0.76862746, a: 1}
+    BoardFill: {r: 0.882353, g: 0.94117653, b: 0.8941177, a: 1}
+    CellFill: {r: 0.8196079, g: 0.9058824, b: 0.8313726, a: 1}
+    ScoreLabelText: {r: 0.882353, g: 0.94117653, b: 0.8941177, a: 1}
+    ScoreValueText: {r: 1, g: 1, b: 1, a: 1}
+    ScoreFill: {r: 0.7058824, g: 0.8196079, b: 0.7254902, a: 1}
+    ButtonText: {r: 0.882353, g: 0.94117653, b: 0.8941177, a: 1}
+    ButtonFill: {r: 0.60784316, g: 0.72156864, b: 0.62352943, a: 1}
+    Tiles:
+    - {fileID: 11400000, guid: a1f33b6e7a245d74ebae7b2aaf593fe3, type: 2}
+    - {fileID: 11400000, guid: 89413dd7a9a653246a0a53ef8651f37c, type: 2}
+    - {fileID: 11400000, guid: f9212ce5d7bf19b439b4a26d1572460b, type: 2}
+    - {fileID: 11400000, guid: f420d2b5083521d4eb466f3e4a799e0e, type: 2}
+    - {fileID: 11400000, guid: 34c9540fee296a34fbd5530cbaac8c6f, type: 2}
+    - {fileID: 11400000, guid: cb812bb9daf3d524eb503d10025668df, type: 2}
+    - {fileID: 11400000, guid: 56a0cd9952b329240833947b705daf98, type: 2}
+    - {fileID: 11400000, guid: 751d1833d7a0735449620bbed37b9571, type: 2}
+    - {fileID: 11400000, guid: 70493bbd4c74b9e4596bd2fa7f72bd58, type: 2}
+    - {fileID: 11400000, guid: fd5ccced7f4f9c947b5fec1416537dc6, type: 2}
+    - {fileID: 11400000, guid: 394bb0e2ea0ec264ca5b9b6b3565f610, type: 2}
+    - {fileID: 11400000, guid: 137cf83249f6b7f488b1b3be379136fd, type: 2}
+    - {fileID: 11400000, guid: c4694c593b1097540a8d8676f4692f3e, type: 2}
+    - {fileID: 11400000, guid: bd2d8ad3d1ff285498788647389f600d, type: 2}
+    - {fileID: 11400000, guid: b1c5a4463f182fc44aed9b4974c76330, type: 2}
+    - {fileID: 11400000, guid: d66f1da3c0f1ac147a1704feb830e3c7, type: 2}
+    - {fileID: 11400000, guid: 32dfe26d4db1c6842979d72ff63ac3f8, type: 2}
