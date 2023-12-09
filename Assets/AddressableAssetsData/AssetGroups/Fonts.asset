@@ -10,28 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Default Local Group
+  m_Name: Fonts
   m_EditorClassIdentifier: 
-  m_GroupName: Default Local Group
+  m_GroupName: Fonts
   m_Data:
     m_SerializedData: []
-  m_GUID: 8d7d032020323064498196a2a9c2be96
+  m_GUID: ca6e62d1f4e36d74a93516c20d0bca07
   m_SerializeEntries:
-  - m_GUID: 8795b39726310b841862ff2ca411b3e2
-    m_Address: Input
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: a1fbe34141629cc449af61689e8d6f3e
-    m_Address: Application
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 496e3abcd9a1eee49b400f8075f32c8d
-    m_Address: Game
+  - m_GUID: 70e85932df129be4b88617bc8a044205
+    m_Address: ClearSansSDF
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 466f556845657a84984bf9e1a7987619, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 755c603dea0d61f44961647db48edae9, type: 2}
-    - {fileID: 11400000, guid: f10696995f3f7c04987d528d41bccf77, type: 2}
+    - {fileID: 11400000, guid: 7fb41afa1617ddd4cb8c9dc2da7c9f17, type: 2}
+    - {fileID: 11400000, guid: b5e5896a4fba7de4883fe78bafed4030, type: 2}

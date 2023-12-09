@@ -32,6 +32,8 @@ namespace PH.Game
 
         private void Awake()
         {
+            Application.targetFrameRate = 60;
+            
             if (Instance != null) {
                 DestroyImmediate(gameObject);
             } else {

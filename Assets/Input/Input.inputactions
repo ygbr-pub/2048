@@ -2,49 +2,13 @@
     "name": "Input",
     "maps": [
         {
-            "name": "Default",
-            "id": "1a296770-d0cb-4d48-8736-53c7c9845d04",
+            "name": "Gameplay",
+            "id": "b98ea167-6e00-47bc-95f1-bca6bb520dc9",
             "actions": [
                 {
-                    "name": "Select",
-                    "type": "Button",
-                    "id": "226a7831-252b-4ca5-8388-3442811e6a62",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press(behavior=1)",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Up",
-                    "type": "Button",
-                    "id": "08d6d813-972d-4a17-8a31-569452feb4ca",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Down",
-                    "type": "Button",
-                    "id": "56de3794-3c14-4186-bf83-87ae7f61877f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Left",
-                    "type": "Button",
-                    "id": "9421ba95-7644-4367-bb8a-2028342c9374",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Right",
-                    "type": "Button",
-                    "id": "77f1eeae-0a4c-46b8-b943-9db2540c1c96",
+                    "name": "TouchContact",
+                    "type": "PassThrough",
+                    "id": "ff940450-b9ea-41ab-bb42-a2dbf06295ee",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press",
@@ -54,133 +18,12 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "a8896408-a765-431f-aee2-30ca56634c30",
-                    "path": "<Keyboard>/enter",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Select",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8ca441ed-0d42-4c37-a4e5-2c80cbb891b0",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Select",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "90aa773c-3cbf-4566-91e6-5e08e3a84151",
-                    "path": "<Touchscreen>/primaryTouch/tap",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Touch",
-                    "action": "Select",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c175d37d-ae65-410d-81ef-03f5da342af4",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Up",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "dc91d747-d539-4416-8c96-a79b70128b63",
-                    "path": "<Keyboard>/downArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Up",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "2bf430db-307c-4abe-9b48-c2d9275bc6f2",
+                    "id": "268eec4a-8628-4ede-9696-1713b866e686",
                     "path": "<Touchscreen>/Press",
                     "interactions": "",
                     "processors": "",
                     "groups": "Touch",
-                    "action": "Up",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "5901f0f5-15b8-4cf4-9204-4224f8b9c837",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Down",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "2bbae249-9abb-4d83-aea7-792afb975cfc",
-                    "path": "<Keyboard>/downArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Down",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "25896a09-7497-472c-8e97-df8199c4c6a5",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Left",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "078fdf2f-12b5-4ac5-9249-eea5a3de1d42",
-                    "path": "<Keyboard>/leftArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Left",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c57abc42-5f17-4210-b87e-c070c5496aad",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Right",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "41a8a09e-d7db-4bd9-8f6c-95d31c03e172",
-                    "path": "<Keyboard>/rightArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Right",
+                    "action": "TouchContact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

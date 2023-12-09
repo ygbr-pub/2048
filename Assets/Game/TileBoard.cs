@@ -2,6 +2,7 @@ namespace PH.Game
 {
     using System.Collections;
     using System.Collections.Generic;
+    using Input;
     using UnityEngine;
 
     public class TileBoard : MonoBehaviour
@@ -19,6 +20,27 @@ namespace PH.Game
             tiles = new List<Tile>(16);
         }
 
+        private void OnEnable()
+        {
+            InputManager.OnSwipeUp += OnSwipeUp;
+            InputManager.OnSwipeDown += OnSwipeDown;
+            InputManager.OnSwipeRight += OnSwipeRight;
+            InputManager.OnSwipeLeft += OnSwipeLeft;
+        }
+        
+        private void OnDisable()
+        {
+            InputManager.OnSwipeUp -= OnSwipeUp;
+            InputManager.OnSwipeDown -= OnSwipeDown;
+            InputManager.OnSwipeRight -= OnSwipeRight;
+            InputManager.OnSwipeLeft -= OnSwipeLeft;
+        }
+        
+        private void OnSwipeUp() => Move(Vector2Int.up, 0, 1, 1, 1);
+        private void OnSwipeDown() => Move(Vector2Int.down, 0, 1, grid.Height - 2, -1);
+        private void OnSwipeRight() => Move(Vector2Int.right, grid.Width - 2, -1, 0, 1);
+        private void OnSwipeLeft() => Move(Vector2Int.left, 1, 1, 0, 1);
+        
         public void ClearBoard()
         {
             foreach (var cell in grid.cells) {
@@ -40,25 +62,13 @@ namespace PH.Game
             tiles.Add(tile);
         }
 
-        private void Update()
-        {
-            if (!waiting)
-            {
-                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
-                    Move(Vector2Int.up, 0, 1, 1, 1);
-                } else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
-                    Move(Vector2Int.left, 1, 1, 0, 1);
-                } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
-                    Move(Vector2Int.down, 0, 1, grid.Height - 2, -1);
-                } else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
-                    Move(Vector2Int.right, grid.Width - 2, -1, 0, 1);
-                }
-            }
-        }
-
         private void Move(Vector2Int direction, int startX, int incrementX, int startY, int incrementY)
         {
-            bool changed = false;
+            // Cannot move while waiting.
+            if (waiting)
+                return;
+            
+            var changed = false;
 
             for (int x = startX; x >= 0 && x < grid.Width; x += incrementX)
             {
