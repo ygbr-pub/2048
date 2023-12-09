@@ -1,10 +1,11 @@
 namespace PH.Theme
 {
+    using System;
     using Application;
     using UnityEngine;
     using UnityEngine.UI;
 
-    [RequireComponent(typeof(Graphic))]
+    // [RequireComponent(typeof(Graphic))]
     public class ThemeUpdateEventGraphic : MonoBehaviour
     {
         [SerializeField] private Graphic _graphic;
@@ -13,6 +14,11 @@ namespace PH.Theme
         private void Awake()
         {
             SettingsManager.OnThemeChanged += OnThemeChanged;
+        }
+
+        private void OnEnable()
+        {
+            
         }
 
         private void OnDestroy()
