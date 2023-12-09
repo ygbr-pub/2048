@@ -1,17 +1,35 @@
 namespace PH.Game
 {
     /* TODO:
+    - App Icon
     - Keyboard Input
-    - Mouse Input, Emulating Swipe
-    - Touch Input
-    - Android Deployment
-    - Connect Theme (Default)
-    - Create alt. Theme
-    - Theme Manager
-    - Export to iOS
+    - iOS Deployment
     - KVS Score Saving/Reading
-    - Replace Images w/ Procedural Image
-    - Find Audio Effects
+    - Find + Add Audio Effects
+    - Title Screen
+        - Title
+        - Play / Settings (Cog) / Achievements (Trophy)
+    - Game Screen
+        - Re-arranged
+        - Settings (Cog)
+        - Achievement (Trophy)
+    - Settings Screen
+        - Volume Slider
+        - Reset High Score
+            - Confirm Modal
+        - Low Battery Mode Enabled/Disabled
+        - Extra Animations Enabled/Disabled
+        - Active Theme
+    - Achievement Screen
+        - Achievements list in scroll view?
+    - Credits (Mail Icon in bottom corner of Title Screen)
+    - Juice:
+        - Text Animator
+        - DoTween Effects
+        - Better Transitions
+        - Blurs?
+        - Particles?
+    - Probably replace themes with uPalette package
     */
     
     using System.Collections;
