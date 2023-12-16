@@ -12,14 +12,8 @@ namespace PH.Game
         public TileCell Cell { get; private set; }
         public bool Locked { get; set; }
     
-        private Image _background;
-        private TextMeshProUGUI _text;
-    
-        private void Awake()
-        {
-            _background = GetComponent<Image>();
-            _text = GetComponentInChildren<TextMeshProUGUI>();
-        }
+        [SerializeField] private Image _background;
+        [SerializeField] private TextMeshProUGUI _text;
     
         public void SetState(TileState state)
         {
@@ -32,10 +26,8 @@ namespace PH.Game
     
         public void Spawn(TileCell cell)
         {
-            if (Cell != null) 
-            {
+            if (Cell != null)
                 Cell.Tile = null;
-            }
     
             Cell = cell;
             Cell.Tile = this;
@@ -57,9 +49,7 @@ namespace PH.Game
         public void Merge(TileCell cell, Action onMerge)
         {
             if (Cell != null) 
-            {
                 Cell.Tile = null;
-            }
     
             Cell = null;
             cell.Tile.Locked = true;
@@ -70,7 +60,7 @@ namespace PH.Game
         private IEnumerator Animate(Vector3 to, bool merging, Action onMerge = null)
         {
             var elapsed = 0f;
-            var duration = 0.1f;
+            var duration = 0.07f;
     
             var from = transform.position;
     

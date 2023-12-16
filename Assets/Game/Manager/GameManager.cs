@@ -1,11 +1,12 @@
 namespace PH.Game
 {
-    /* TODO:
+    /* TODO List:
     - App Icon
     - Keyboard Input
     - iOS Deployment
     - KVS Score Saving/Reading
     - Find + Add Audio Effects
+        - Rapid merging raises merge sfx pitch gradually to a maximum. Resets on break.
     - Title Screen
         - Title
         - Play / Settings (Cog) / Achievements (Trophy)
@@ -15,11 +16,9 @@ namespace PH.Game
         - Achievement (Trophy)
     - Settings Screen
         - Volume Slider
-        - Reset High Score
-            - Confirm Modal
-        - Low Battery Mode Enabled/Disabled
-        - Extra Animations Enabled/Disabled
         - Active Theme
+        - Extra Animations Enabled/Disabled
+        - Low Battery Mode Enabled/Disabled
     - Achievement Screen
         - Achievements list in scroll view?
     - Credits (Mail Icon in bottom corner of Title Screen)
