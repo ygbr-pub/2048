@@ -53,8 +53,8 @@ MonoBehaviour:
           - 2e0ed1df-c682-4843-aff2-10b1d5949dbd
           - 5b1a6eea-114a-42c1-af4b-c6d97f729865
           _values:
-          - _value: {r: 0.73333335, g: 0.6784314, b: 0.627451, a: 1}
-          - _value: {r: 0.9098039, g: 0.96862745, b: 0.92156863, a: 1}
+          - _value: {r: 1, g: 0.9490197, b: 0.90196085, a: 1}
+          - _value: {r: 0.94117653, g: 0.9686275, b: 0.9450981, a: 1}
       - _id: b506c046-c093-4c3a-a302-3ce4966c4fd4
         _name:
           _value: General_LabelText
@@ -84,7 +84,7 @@ MonoBehaviour:
           - 5b1a6eea-114a-42c1-af4b-c6d97f729865
           _values:
           - _value: {r: 0.73333335, g: 0.6784314, b: 0.627451, a: 1}
-          - _value: {r: 0.89411765, g: 1, b: 0.9372549, a: 1}
+          - _value: {r: 0.9215687, g: 0.9686275, b: 0.92549026, a: 0}
       - _id: 0e1dcb02-def3-42cc-9b45-dcecc9d8504f
         _name:
           _value: Board_CellFill
@@ -94,7 +94,7 @@ MonoBehaviour:
           - 5b1a6eea-114a-42c1-af4b-c6d97f729865
           _values:
           - _value: {r: 0.80392164, g: 0.7568628, b: 0.7058824, a: 1}
-          - _value: {r: 0.81960785, g: 0.90588236, b: 0.83137256, a: 1}
+          - _value: {r: 0.81960785, g: 0.90588236, b: 0.83137256, a: 0}
       - _id: 8538d10d-094e-414f-960e-37239aa22078
         _name:
           _value: Score_LabelText
