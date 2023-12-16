@@ -2,10 +2,13 @@ namespace PH.Game
 {
     using System;
     using System.Collections;
+    using Application;
     using TMPro;
     using UnityEngine;
     using UnityEngine.UI;
-    
+    using uPalette.Generated;
+    using uPalette.Runtime.Core;
+
     public class Tile : MonoBehaviour
     {
         public TileState State { get; private set; }
@@ -14,16 +17,25 @@ namespace PH.Game
     
         [SerializeField] private Image _background;
         [SerializeField] private TextMeshProUGUI _text;
-    
-        public void SetState(TileState state)
+
+        private Action _onStateChanged;
+
+        private void Awake()
         {
-            State = state;
-    
-            _background.color = state.backgroundColor;
-            _text.color = state.textColor;
-            _text.text = state.number.ToString();
+            SettingsManager.OnThemeChanged += OnThemeChanged;
+            _onStateChanged += OnStateChanged;
         }
-    
+
+        private void OnDestroy()
+        {
+            SettingsManager.OnThemeChanged -= OnThemeChanged;
+            _onStateChanged -= OnStateChanged;
+        }
+        
+        private void OnThemeChanged() => RefreshColors();
+
+        private void OnStateChanged() => RefreshColors();
+
         public void Spawn(TileCell cell)
         {
             if (Cell != null)
@@ -33,6 +45,12 @@ namespace PH.Game
             Cell.Tile = this;
     
             transform.position = cell.transform.position;
+        }
+        
+        public void SetState(TileState state)
+        {
+            State = state;
+            _onStateChanged?.Invoke();
         }
     
         public void MoveTo(TileCell cell)
@@ -80,5 +98,16 @@ namespace PH.Game
             Destroy(gameObject);
         }
     
+        private void RefreshColors()
+        {
+            var activeThemePalette = PaletteStore.Instance.ColorPalette;
+            var backgroundId = State.backgroundColorId.ToEntryId();
+            var textId = State.textColorId.ToEntryId();
+            
+            _background.color = activeThemePalette.GetActiveValue(backgroundId).Value;
+            _text.color = activeThemePalette.GetActiveValue(textId).Value;
+            _text.text = State.number.ToString();
+        }
+        
     }
 }

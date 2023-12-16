@@ -1,27 +1,27 @@
 ﻿namespace PH.Application
 {
     using System;
-    using Theme;
     using UnityEngine;
+    using uPalette.Generated;
+    using uPalette.Runtime.Core;
 
     public class SettingsManager : MonoBehaviour
     {
-        public static Action<ThemeConfig> OnThemeChanged;
-        
-        [SerializeField] private ThemeConfig _defaultConfig;
-        private ThemeConfig _activeTheme;
+        private const ColorTheme DefaultTheme = ColorTheme.MintPastel;
+        private ColorTheme _activeTheme;
+
+        public static Action OnThemeChanged;
         
         private void Start()
         {
-            SetActiveTheme(_defaultConfig);
+            SetActiveTheme(DefaultTheme);
         }
 
-        private void SetActiveTheme(ThemeConfig theme)
+        private void SetActiveTheme(ColorTheme theme)
         {
-            if (theme == null)
-                return;
             _activeTheme = theme;
-            OnThemeChanged?.Invoke(_activeTheme);
+            PaletteStore.Instance.ColorPalette.SetActiveTheme(_activeTheme.ToThemeId());
+            OnThemeChanged?.Invoke();
         }
     }
 }

@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5834b5087d578d24c926ce20cd31e6d6, type: 3}
-  m_Name: Fonts_ContentUpdateGroupSchema
+  m_Script: {fileID: 11500000, guid: 6da7eb619f13b9e438623a1594a8013d, type: 3}
+  m_Name: TileState_131072
   m_EditorClassIdentifier: 
-  m_Group: {fileID: 11400000, guid: c9d5b80b56479fe4eacfce19a1e43c6f, type: 2}
-  m_StaticContent: 0
+  number: 131072
+  backgroundColorId: 28
+  textColorId: 10

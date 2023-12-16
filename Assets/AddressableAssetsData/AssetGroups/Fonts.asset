@@ -15,15 +15,15 @@ MonoBehaviour:
   m_GroupName: Fonts
   m_Data:
     m_SerializedData: []
-  m_GUID: ca6e62d1f4e36d74a93516c20d0bca07
+  m_GUID: 6d6211e873b19e64da066663c6f95508
   m_SerializeEntries:
   - m_GUID: 70e85932df129be4b88617bc8a044205
-    m_Address: ClearSansSDF
+    m_Address: ClearSans
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 466f556845657a84984bf9e1a7987619, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 7fb41afa1617ddd4cb8c9dc2da7c9f17, type: 2}
-    - {fileID: 11400000, guid: b5e5896a4fba7de4883fe78bafed4030, type: 2}
+    - {fileID: 11400000, guid: aff1a8a8b773eee468cbe427e1224036, type: 2}
+    - {fileID: 11400000, guid: 26d95c7532cfd2442b15925f8d37edb7, type: 2}
