@@ -1,7 +1,9 @@
 namespace PH.Game
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
+    using DG.Tweening;
     using Input;
     using UnityEngine;
 
@@ -9,6 +11,10 @@ namespace PH.Game
     {
         [SerializeField] private Tile tilePrefab;
         [SerializeField] private TileState[] tileStates;
+
+        public static Action OnTileMerged;
+        public static int MergeStreakValue;
+        public static int MergeStreakCounter;
 
         private TileGrid _grid;
         private List<Tile> _tiles;
@@ -50,6 +56,8 @@ namespace PH.Game
                 Destroy(tile.gameObject);
 
             _tiles.Clear();
+
+            MergeStreakValue = MergeStreakCounter = 0;
         }
 
         public void CreateTile()
@@ -66,21 +74,26 @@ namespace PH.Game
                 return;
             
             var changed = false;
+            var mergeOccured = false;
+            var mergeStreakOccured = false;
             for (var x = startX; x >= 0 && x < _grid.Width; x += incrementX)
             {
                 for (var y = startY; y >= 0 && y < _grid.Height; y += incrementY)
                 {
                     var cell = _grid.GetCell(x, y);
                     if (cell.Occupied) 
-                        changed |= MoveTile(cell.Tile, direction);
+                        changed |= MoveTile(cell.Tile, direction, ref mergeOccured, ref mergeStreakOccured);
                 }
             }
 
+            if (!mergeOccured || !mergeStreakOccured) MergeStreakValue = MergeStreakCounter = 0;
+            if (mergeStreakOccured) MergeStreakCounter++;
+                
             if (changed) 
                 StartCoroutine(WaitForChanges());
         }
 
-        private bool MoveTile(Tile tile, Vector2Int direction)
+        private bool MoveTile(Tile tile, Vector2Int direction, ref bool mergeOccured, ref bool mergeStreakOccured)
         {
             TileCell newCell = null;
             var adjacent = _grid.GetAdjacentCell(tile.Cell, direction);
@@ -92,6 +105,11 @@ namespace PH.Game
                     if (CanMerge(tile, adjacent.Tile))
                     {
                         MergeTiles(tile, adjacent.Tile);
+                        mergeOccured = true;
+                        if (adjacent.Tile.State.number < 4 || adjacent.Tile.State.number <= MergeStreakValue) 
+                            return true;
+                        MergeStreakValue = adjacent.Tile.State.number;                             
+                        mergeStreakOccured = true;
                         return true;
                     }
                     break;
@@ -123,7 +141,9 @@ namespace PH.Game
                 var newState = tileStates[index];
 
                 b.SetState(newState);
+                
                 GameManager.Instance.IncreaseScore(newState.number);
+                OnTileMerged?.Invoke();
             }
         }
 

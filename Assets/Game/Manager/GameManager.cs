@@ -32,6 +32,8 @@ namespace PH.Game
     */
     
     using System.Collections;
+    using System.Globalization;
+    using DG.Tweening;
     using TMPro;
     using UnityEngine;
     
@@ -117,10 +119,26 @@ namespace PH.Game
 
         private void SetScore(int score)
         {
+            var prevScore = _score;
             _score = score;
-            scoreText.text = score.ToString();
-
             SaveHighScore();
+            
+            var tweenId = GetInstanceID();
+            DOTween.Kill(tweenId);
+            
+            var duration = 0.5f;
+            var counter = (float) _score;
+            DOTween.To(UpdateAnimCounter,
+                    prevScore,
+                    score,
+                    duration)
+                .OnUpdate(UpdateLabelText)
+                .OnComplete(FinalizeLabelText)
+                .SetId(tweenId);                
+                
+            void UpdateAnimCounter(float x) => counter = x;
+            void UpdateLabelText() => scoreText.text = Mathf.RoundToInt(counter).ToString(CultureInfo.InvariantCulture);
+            void FinalizeLabelText() => scoreText.text = _score.ToString();
         }
 
         private void SaveHighScore()

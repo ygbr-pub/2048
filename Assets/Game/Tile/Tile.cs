@@ -2,7 +2,9 @@ namespace PH.Game
 {
     using System;
     using System.Collections;
+    using System.Globalization;
     using Application;
+    using DG.Tweening;
     using TMPro;
     using UnityEngine;
     using UnityEngine.UI;
@@ -12,11 +14,13 @@ namespace PH.Game
     public class Tile : MonoBehaviour
     {
         public TileState State { get; private set; }
+        public TileState PreviousState { get; private set; }
         public TileCell Cell { get; private set; }
         public bool Locked { get; set; }
     
         [SerializeField] private Image _background;
         [SerializeField] private TextMeshProUGUI _text;
+        [SerializeField] private Shadow _shadow;
 
         private Action _onStateChanged;
 
@@ -46,11 +50,21 @@ namespace PH.Game
     
             transform.position = cell.transform.position;
         }
+
+        [SerializeField] private AnimationCurve _punchScaleCurve;
         
         public void SetState(TileState state)
         {
+            PreviousState = State;
             State = state;
             _onStateChanged?.Invoke();
+            
+            var logValue = Mathf.Log(state.number, 2);
+            var animScale01 = Mathf.Clamp01(_punchScaleCurve.Evaluate(logValue));
+            var punchMagnitude = Mathf.Lerp(0.05f, 0.1f, animScale01);
+            var durationMagnitude = Mathf.Lerp(0.1f, 0.2f, animScale01);
+            var vibratoMagnitude = Mathf.RoundToInt(Mathf.Lerp(1, 10, animScale01));
+            transform.DOPunchScale(Vector3.one * punchMagnitude, durationMagnitude, vibratoMagnitude, 1f);
         }
     
         public void MoveTo(TileCell cell)
@@ -60,8 +74,8 @@ namespace PH.Game
 
             Cell = cell;
             Cell.Tile = this;
-    
-            StartCoroutine(Animate(cell.transform.position, false));
+
+            Animate(cell.transform.position, false);
         }
     
         public void Merge(TileCell cell, Action onMerge)
@@ -72,30 +86,22 @@ namespace PH.Game
             Cell = null;
             cell.Tile.Locked = true;
     
-            StartCoroutine(Animate(cell.transform.position, true, onMerge));
+            Animate(cell.transform.position, true, onMerge);
         }
     
-        private IEnumerator Animate(Vector3 to, bool merging, Action onMerge = null)
+        private void Animate(Vector3 to, bool merging, Action onMerge = null)
         {
-            var elapsed = 0f;
-            var duration = 0.07f;
-    
-            var from = transform.position;
-    
-            while (elapsed < duration)
-            {
-                transform.position = Vector3.Lerp(from, to, elapsed / duration);
-                elapsed += Time.deltaTime;
-                yield return null;
-            }
-    
-            transform.position = to;
+            const float duration = 0.07f;
+            transform.DOMove(to, duration).OnComplete(OnMoveComplete);
 
-            if (!merging) 
-                yield break;
-            
-            onMerge?.Invoke();
-            Destroy(gameObject);
+            void OnMoveComplete()
+            {
+                if (!merging)
+                    return;
+                
+                onMerge?.Invoke();
+                Destroy(gameObject);                
+            }
         }
     
         private void RefreshColors()
@@ -103,10 +109,35 @@ namespace PH.Game
             var activeThemePalette = PaletteStore.Instance.ColorPalette;
             var backgroundId = State.backgroundColorId.ToEntryId();
             var textId = State.textColorId.ToEntryId();
+            var shadowid = ColorEntry.Tile_Shadow.ToEntryId();
             
             _background.color = activeThemePalette.GetActiveValue(backgroundId).Value;
             _text.color = activeThemePalette.GetActiveValue(textId).Value;
-            _text.text = State.number.ToString();
+            _shadow.effectColor = activeThemePalette.GetActiveValue(shadowid).Value;
+
+            // If we don't have a prev. state or the diff is too small, immediately update.
+            // Otherwise perform a counter animation.
+            if (PreviousState == null || State.number - PreviousState.number < 4)
+            {
+                _text.text = State.number.ToString();
+            }
+            else
+            {
+                var logValue = Mathf.Log(State.number, 2);
+                var animScaler01 = Mathf.InverseLerp(1, 20, logValue);
+                var duration = Mathf.Lerp(0.2f, 0.6f, animScaler01);
+                var counter = (float) PreviousState.number;
+                DOTween.To(UpdateAnimCounter, 
+                        PreviousState.number, 
+                        State.number, 
+                        duration)
+                    .OnUpdate(UpdateLabelText)
+                    .OnComplete(FinalizeLabelText);                
+                
+                void UpdateAnimCounter(float x) => counter = x;
+                void UpdateLabelText() => _text.text = Mathf.RoundToInt(counter).ToString(CultureInfo.InvariantCulture);
+                void FinalizeLabelText() => _text.text = State.number.ToString();
+            }
         }
         
     }

@@ -55,6 +55,7 @@ public enum ColorTheme
         Tile_32768,
         Tile_65536,
         Tile_131072,
+        Tile_Shadow,
     }
 
     public static class ColorEntryExtensions
@@ -121,6 +122,8 @@ public enum ColorTheme
                     return "34839df2-3c20-4644-8b16-9e420c6c4c3a";
                 case ColorEntry.Tile_131072:
                     return "a482929a-a122-4787-acb7-637fe58f95a5";
+                case ColorEntry.Tile_Shadow:
+                    return "767c4763-20f8-4f35-b2a5-a63280286446";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(entry), entry, null);
             }

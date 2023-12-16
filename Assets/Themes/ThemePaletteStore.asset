@@ -44,6 +44,7 @@ MonoBehaviour:
       - a482929a-a122-4787-acb7-637fe58f95a5
       - 8745f601-fc05-45e3-8095-ae07b4f09c5b
       - 4c4d3d48-9f77-44b0-bf91-b9a3f23bdf45
+      - 767c4763-20f8-4f35-b2a5-a63280286446
       _values:
       - _id: 7142aaa1-e84d-48d8-9442-5e63cd758323
         _name:
@@ -214,7 +215,7 @@ MonoBehaviour:
           - 5b1a6eea-114a-42c1-af4b-c6d97f729865
           _values:
           - _value: {r: 0.9294118, g: 0.81568635, b: 0.45098042, a: 1}
-          - _value: {r: 0.9294118, g: 0.86274517, b: 0.6509804, a: 1}
+          - _value: {r: 0.9725491, g: 0.9176471, b: 0.7490196, a: 1}
       - _id: 4f8f26fa-065b-4a06-bfaf-6c36492a05b7
         _name:
           _value: Tile_256
@@ -224,7 +225,7 @@ MonoBehaviour:
           - 5b1a6eea-114a-42c1-af4b-c6d97f729865
           _values:
           - _value: {r: 0.9294118, g: 0.81568635, b: 0.45098042, a: 1}
-          - _value: {r: 0.9294118, g: 0.86274517, b: 0.6509804, a: 1}
+          - _value: {r: 0.9725491, g: 0.9176471, b: 0.7490196, a: 1}
       - _id: 7ccdee7d-5935-4bbf-98a9-33145a62668d
         _name:
           _value: Tile_512
@@ -234,7 +235,7 @@ MonoBehaviour:
           - 5b1a6eea-114a-42c1-af4b-c6d97f729865
           _values:
           - _value: {r: 0.9294118, g: 0.81568635, b: 0.45098042, a: 1}
-          - _value: {r: 0.9294118, g: 0.86274517, b: 0.6509804, a: 1}
+          - _value: {r: 0.9725491, g: 0.9176471, b: 0.7490196, a: 1}
       - _id: 93cb64c8-386a-4a7d-ac16-de1359eaba36
         _name:
           _value: Tile_1024
@@ -244,7 +245,7 @@ MonoBehaviour:
           - 5b1a6eea-114a-42c1-af4b-c6d97f729865
           _values:
           - _value: {r: 0.9294118, g: 0.81568635, b: 0.45098042, a: 1}
-          - _value: {r: 0.92941177, g: 0.8666667, b: 0.6509804, a: 1}
+          - _value: {r: 0.9725491, g: 0.9176471, b: 0.7490196, a: 1}
       - _id: f8178d7d-a18a-45ac-a0e3-7b3090f383b4
         _name:
           _value: Tile_2048
@@ -254,7 +255,7 @@ MonoBehaviour:
           - 5b1a6eea-114a-42c1-af4b-c6d97f729865
           _values:
           - _value: {r: 0.9294118, g: 0.81568635, b: 0.45098042, a: 1}
-          - _value: {r: 0.9294118, g: 0.86666673, b: 0.6509804, a: 1}
+          - _value: {r: 0.9725491, g: 0.9176471, b: 0.7490196, a: 1}
       - _id: e7ec7dee-1a3b-4c1a-88ec-6cb279629c89
         _name:
           _value: Tile_4096
@@ -335,6 +336,16 @@ MonoBehaviour:
           _values:
           - _value: {r: 0.56078434, g: 0.4784314, b: 0.40000004, a: 1}
           - _value: {r: 1, g: 1, b: 1, a: 1}
+      - _id: 767c4763-20f8-4f35-b2a5-a63280286446
+        _name:
+          _value: Tile_Shadow
+        _values:
+          _keys:
+          - 2e0ed1df-c682-4843-aff2-10b1d5949dbd
+          - 5b1a6eea-114a-42c1-af4b-c6d97f729865
+          _values:
+          - _value: {r: 0.96862745, g: 0.63529414, b: 0.5568628, a: 0.12941177}
+          - _value: {r: 0.5568628, g: 0.7269381, b: 0.96862745, a: 0.12941177}
     _themes:
       _keys:
       - 2e0ed1df-c682-4843-aff2-10b1d5949dbd
@@ -377,6 +388,7 @@ MonoBehaviour:
       - f4718865-8fab-4c79-aaf3-fa4a397c8c0e
       - 34839df2-3c20-4644-8b16-9e420c6c4c3a
       - a482929a-a122-4787-acb7-637fe58f95a5
+      - 767c4763-20f8-4f35-b2a5-a63280286446
     _themeOrders:
       _ids:
       - 2e0ed1df-c682-4843-aff2-10b1d5949dbd
