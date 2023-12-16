@@ -30,6 +30,8 @@ namespace PH.Theme
             var activeThemePalette = PaletteStore.Instance.ColorPalette;
             var elementId = _paletteElement.ToEntryId();
             
+            Debug.Log($"ActiveTheme: {activeThemePalette.ActiveTheme.Value.Name.Value}");
+            
             _graphic.color = activeThemePalette.GetActiveValue(elementId).Value;
         }
 
