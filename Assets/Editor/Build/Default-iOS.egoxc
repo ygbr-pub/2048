@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Type</key>
+    <string>EgoXproject Change File</string>
+    <key>Version</key>
+    <integer>2</integer>
+    <key>BuildPlatform</key>
+    <string>iOS</string>
+    <key>InfoPlist</key>
+    <dict>
+      <key>CFBundleDisplayName</key>
+      <string>2048</string>
+      <key>CFBundleShortVersionString</key>
+      <string>1.0</string>
+      <key>CFBundleVersion</key>
+      <string>0</string>
+    </dict>
+    <key>AppConfig</key>
+    <dict>
+      <key>CFBundleDisplayName</key>
+      <string>2048</string>
+      <key>EnableLanguages</key>
+      <array>
+        <string>en-AU</string>
+        <string>en</string>
+        <string>en-GB</string>
+      </array>
+    </dict>
+    <key>AppConfigEnabled</key>
+    <array>
+      <string>CFBundleDisplayName</string>
+      <string>EnableLanguages</string>
+    </array>
+    <key>ManualEntitlements</key>
+    <dict />
+    <key>Frameworks</key>
+    <dict>
+      <key>System</key>
+      <array />
+    </dict>
+    <key>FilesAndFolders</key>
+    <dict>
+      <key>Entries</key>
+      <array />
+    </dict>
+    <key>BuildSettings</key>
+    <array />
+    <key>Signing</key>
+    <dict>
+      <key>TeamId</key>
+      <string>6D3TMVB26L</string>
+    </dict>
+    <key>Scripts</key>
+    <array />
+    <key>Capabilities</key>
+    <dict />
+  </dict>
+</plist>
