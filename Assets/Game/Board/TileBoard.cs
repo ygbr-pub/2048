@@ -1,7 +1,6 @@
 namespace PH.Game
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using DG.Tweening;
     using Input;
@@ -18,7 +17,7 @@ namespace PH.Game
 
         private TileGrid _grid;
         private List<Tile> _tiles;
-        private bool _waiting;
+        private bool _waitingForStateChange;
 
         private void Awake()
         {
@@ -70,10 +69,10 @@ namespace PH.Game
 
         private void Move(Vector2Int direction, int startX, int incrementX, int startY, int incrementY)
         {
-            if (_waiting)
+            if (_waitingForStateChange)
                 return;
             
-            var changed = false;
+            var hasBoardStateChanged = false;
             var mergeOccured = false;
             var mergeStreakOccured = false;
             for (var x = startX; x >= 0 && x < _grid.Width; x += incrementX)
@@ -82,15 +81,37 @@ namespace PH.Game
                 {
                     var cell = _grid.GetCell(x, y);
                     if (cell.Occupied) 
-                        changed |= MoveTile(cell.Tile, direction, ref mergeOccured, ref mergeStreakOccured);
+                        hasBoardStateChanged |= MoveTile(cell.Tile, direction, ref mergeOccured, ref mergeStreakOccured);
                 }
             }
 
             if (!mergeOccured || !mergeStreakOccured) MergeStreakValue = MergeStreakCounter = 0;
             if (mergeStreakOccured) MergeStreakCounter++;
+            
+            if (hasBoardStateChanged) YieldForBoardStateChange();
+
+            void YieldForBoardStateChange()
+            {
+                _waitingForStateChange = true;
                 
-            if (changed) 
-                StartCoroutine(WaitForChanges());
+                const float delay = 0.1f;
+                DOTween.To(x => _ = x, 0f, delay, delay)
+                    .OnComplete(OnDelayCompleted);
+
+                void OnDelayCompleted()
+                {
+                    _waitingForStateChange = false;
+                    
+                    foreach (var tile in _tiles) 
+                        tile.Locked = false;
+
+                    if (_tiles.Count != _grid.Size) 
+                        CreateTile();
+
+                    if (CheckForGameOver()) 
+                        GameManager.Instance.ShowGameOver();
+                }
+            }
         }
 
         private bool MoveTile(Tile tile, Vector2Int direction, ref bool mergeOccured, ref bool mergeStreakOccured)
@@ -153,22 +174,6 @@ namespace PH.Game
                 if (state == tileStates[i])
                     return i;
             return -1;
-        }
-
-        private IEnumerator WaitForChanges()
-        {
-            _waiting = true;
-            yield return new WaitForSeconds(0.1f);
-            _waiting = false;
-
-            foreach (var tile in _tiles) 
-                tile.Locked = false;
-
-            if (_tiles.Count != _grid.Size) 
-                CreateTile();
-
-            if (CheckForGameOver()) 
-                GameManager.Instance.ShowGameOver();
         }
 
         private bool CheckForGameOver()

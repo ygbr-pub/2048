@@ -4,13 +4,16 @@
     using UnityEngine;
     using uPalette.Generated;
     using uPalette.Runtime.Core;
+    using uPalette.Runtime.Core.Model;
 
     public class SettingsManager : MonoBehaviour
     {
-        private const ColorTheme DefaultTheme = ColorTheme.MintPastel;
+        public static Action OnThemeChanged;
+
+        private Palette<Color> ColorPalette => PaletteStore.Instance.ColorPalette;
+        private const ColorTheme DefaultTheme = ColorTheme.DarkMode;
         private ColorTheme _activeTheme;
 
-        public static Action OnThemeChanged;
         
         private void Start()
         {
@@ -20,7 +23,7 @@
         private void SetActiveTheme(ColorTheme theme)
         {
             _activeTheme = theme;
-            PaletteStore.Instance.ColorPalette.SetActiveTheme(_activeTheme.ToThemeId());
+            ColorPalette.SetActiveTheme(_activeTheme.ToThemeId());
             OnThemeChanged?.Invoke();
         }
     }

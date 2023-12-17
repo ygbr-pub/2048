@@ -109,34 +109,41 @@ namespace PH.Game
             var activeThemePalette = PaletteStore.Instance.ColorPalette;
             var backgroundId = State.backgroundColorId.ToEntryId();
             var textId = State.textColorId.ToEntryId();
-            var shadowid = ColorEntry.Tile_Shadow.ToEntryId();
+            var shadowId = ColorEntry.Tile_Shadow.ToEntryId();
             
             _background.color = activeThemePalette.GetActiveValue(backgroundId).Value;
             _text.color = activeThemePalette.GetActiveValue(textId).Value;
-            _shadow.effectColor = activeThemePalette.GetActiveValue(shadowid).Value;
+            _shadow.effectColor = activeThemePalette.GetActiveValue(shadowId).Value;
 
-            // If we don't have a prev. state or the diff is too small, immediately update.
-            // Otherwise perform a counter animation.
-            if (PreviousState == null || State.number - PreviousState.number < 4)
+            var hasPreviousState = PreviousState != null;
+            var hasMinimumValueDistance = hasPreviousState && State.number - PreviousState.number < 4;
+
+            if (!hasMinimumValueDistance) 
+                SetValueLabelImmediate();
+            else 
+                SetValueLabelAnimated();
+
+            void SetValueLabelImmediate()
             {
                 _text.text = State.number.ToString();
             }
-            else
+
+            void SetValueLabelAnimated()
             {
                 var logValue = Mathf.Log(State.number, 2);
-                var animScaler01 = Mathf.InverseLerp(1, 20, logValue);
-                var duration = Mathf.Lerp(0.2f, 0.6f, animScaler01);
+                var animScale01 = Mathf.InverseLerp(1, 20, logValue);
+                var duration = Mathf.Lerp(0.2f, 0.6f, animScale01);
                 var counter = (float) PreviousState.number;
-                DOTween.To(UpdateAnimCounter, 
-                        PreviousState.number, 
-                        State.number, 
-                        duration)
+                var from = PreviousState.number;
+                var to = State.number;
+                
+                DOTween.To(UpdateAnimCounter, from, to, duration)
                     .OnUpdate(UpdateLabelText)
                     .OnComplete(FinalizeLabelText);                
                 
                 void UpdateAnimCounter(float x) => counter = x;
                 void UpdateLabelText() => _text.text = Mathf.RoundToInt(counter).ToString(CultureInfo.InvariantCulture);
-                void FinalizeLabelText() => _text.text = State.number.ToString();
+                void FinalizeLabelText() => SetValueLabelImmediate();
             }
         }
         

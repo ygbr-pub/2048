@@ -6,6 +6,7 @@ public enum ColorTheme
     {
         Default,
         MintPastel,
+        DarkMode,
     }
 
     public static class ColorThemeExtensions
@@ -18,6 +19,8 @@ public enum ColorTheme
                     return "2e0ed1df-c682-4843-aff2-10b1d5949dbd";
                 case ColorTheme.MintPastel:
                     return "5b1a6eea-114a-42c1-af4b-c6d97f729865";
+                case ColorTheme.DarkMode:
+                    return "3edc3998-28e7-45c1-832b-7a9616df1639";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(theme), theme, null);
             }

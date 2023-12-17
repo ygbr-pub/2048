@@ -1,12 +1,12 @@
 namespace PH.Game
 {
     /* TODO List:
-    - App Icon
+    - Tapping on tiles is soundboard/springy. Just a fun easter-egg I suppose.
+    - Prefab-ify scene objects
     - Keyboard Input
-    - iOS Deployment
     - KVS Score Saving/Reading
     - Find + Add Audio Effects
-        - Rapid merging raises merge sfx pitch gradually to a maximum. Resets on break.
+    - Haptics
     - Title Screen
         - Title
         - Play / Settings (Cog) / Achievements (Trophy)
@@ -15,20 +15,22 @@ namespace PH.Game
         - Settings (Cog)
         - Achievement (Trophy)
     - Settings Screen
-        - Volume Slider
+        - Mute
+        - Haptics
         - Active Theme
-        - Extra Animations Enabled/Disabled
+        - Dark Mode Theme
         - Low Battery Mode Enabled/Disabled
+            - Disable AA
+            - Replace Procedural image with rasterized 9-slice sprite
+        - Reset High Score
+    - Confirm Modal UIs
     - Achievement Screen
         - Achievements list in scroll view?
-    - Credits (Mail Icon in bottom corner of Title Screen)
     - Juice:
         - Text Animator
-        - DoTween Effects
         - Better Transitions
         - Blurs?
         - Particles?
-    - Probably replace themes with uPalette package
     */
     
     using System.Collections;

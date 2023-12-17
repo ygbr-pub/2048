@@ -1,6 +1,5 @@
 namespace PH.Game
 {
-    using System;
     using UnityEngine;
     
     public class SfxManager : MonoBehaviour
@@ -15,18 +14,26 @@ namespace PH.Game
             TileBoard.OnTileMerged += OnTileMerged;
         }
 
-        private void OnTileMerged()
+        private void OnDestroy()
         {
-            _doMergeSfx = true;
+            TileBoard.OnTileMerged -= OnTileMerged;
         }
+
+        private void OnTileMerged() => _doMergeSfx = true;
 
         private void LateUpdate()
         {
-            if (_doMergeSfx)
+            TryPerformMergeSfx();
+
+            void TryPerformMergeSfx()
             {
+                if (!_doMergeSfx) 
+                    return;
+                
                 _doMergeSfx = false;
-                var pitchMagnitude01 = Mathf.InverseLerp(1, 5, TileBoard.MergeStreakCounter);
-                _mergeSfx.pitch = Mathf.Lerp(1f, 2f, pitchMagnitude01);
+                
+                var pitchMagnitude01 = Mathf.InverseLerp(1, 10, TileBoard.MergeStreakCounter);
+                _mergeSfx.pitch = Mathf.Lerp(1f, 3f, pitchMagnitude01);
                 _mergeSfx.Play();
             }
         }

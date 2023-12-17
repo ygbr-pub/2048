@@ -23,11 +23,6 @@ namespace PH.Input
         {
             _input.Gameplay.TouchContact.started += OnStartTouchContact;
             _input.Gameplay.TouchContact.canceled += OnEndTouchContact;
-
-            OnSwipeUp += () => Debug.Log("OnSwipeUp!");
-            OnSwipeDown += () => Debug.Log("OnSwipeDown!");
-            OnSwipeLeft += () => Debug.Log("OnSwipeLeft!");
-            OnSwipeRight += () => Debug.Log("OnSwipeRight!");
         }
 
         private void OnDestroy()
