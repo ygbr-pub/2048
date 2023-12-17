@@ -93,10 +93,9 @@ namespace PH.Game
             void YieldForBoardStateChange()
             {
                 _waitingForStateChange = true;
-                
+
                 const float delay = 0.1f;
-                DOTween.To(x => _ = x, 0f, delay, delay)
-                    .OnComplete(OnDelayCompleted);
+                DOTween.Sequence().SetDelay(delay).OnComplete(OnDelayCompleted);
 
                 void OnDelayCompleted()
                 {
@@ -126,9 +125,11 @@ namespace PH.Game
                     if (CanMerge(tile, adjacent.Tile))
                     {
                         MergeTiles(tile, adjacent.Tile);
+                        
                         mergeOccured = true;
                         if (adjacent.Tile.State.number < 4 || adjacent.Tile.State.number <= MergeStreakValue) 
                             return true;
+                        
                         MergeStreakValue = adjacent.Tile.State.number;                             
                         mergeStreakOccured = true;
                         return true;
@@ -171,8 +172,10 @@ namespace PH.Game
         private int IndexOf(TileState state)
         {
             for (var i = 0; i < tileStates.Length; i++)
+            {
                 if (state == tileStates[i])
                     return i;
+            }
             return -1;
         }
 

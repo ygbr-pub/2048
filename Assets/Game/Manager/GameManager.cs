@@ -4,7 +4,8 @@ namespace PH.Game
     - Tapping on tiles is soundboard/springy. Just a fun easter-egg I suppose.
     - Prefab-ify scene objects
     - Keyboard Input
-    - KVS Score Saving/Reading
+    - Experiment with non-linear easing in our animations
+    - CloudKit: KVS Score Saving/Reading
     - Find + Add Audio Effects
     - Haptics
     - Title Screen
@@ -20,6 +21,7 @@ namespace PH.Game
         - Active Theme
         - Dark Mode Theme
         - Low Battery Mode Enabled/Disabled
+            - Reduce Framerate (30)
             - Disable AA
             - Replace Procedural image with rasterized 9-slice sprite
         - Reset High Score
@@ -34,7 +36,6 @@ namespace PH.Game
     */
 
     using System;
-    using System.Collections;
     using System.Globalization;
     using DG.Tweening;
     using TMPro;
@@ -47,16 +48,14 @@ namespace PH.Game
         public static GameManager Instance { get; private set; }
         public static Action<int> OnHighScore;
 
-        [SerializeField] private CloudKitManager _cloudKit;
-
+        private int Score { get; set; }
+        
+        private CloudKitManager _cloudKit;
         [SerializeField] private TileBoard board;
         [SerializeField] private CanvasGroup gameOver;
         [SerializeField] private TextMeshProUGUI scoreText;
         [SerializeField] private TextMeshProUGUI hiscoreText;
-
-        private int _score;
-        public int Score => _score;
-
+        
         private void Awake()
         {
             if (Instance != null) 
@@ -66,6 +65,10 @@ namespace PH.Game
 
             if (Instance == this)
                 DontDestroyOnLoad(gameObject);
+
+#if UNITY_IOS
+            _cloudKit = gameObject.AddComponent<CloudKitManager>();
+#endif
         }
 
         private void Start()
@@ -76,8 +79,8 @@ namespace PH.Game
         public void NewGame()
         {
             SetScore(0);
-            var cachedHighScore = LoadHighScore();
-            hiscoreText.text = cachedHighScore.ToString();
+            var highScore = LoadHighScore();
+            hiscoreText.text = highScore.ToString();
 
             HideGameOver();
             board.ClearBoard();
@@ -96,44 +99,34 @@ namespace PH.Game
         {
             board.enabled = false;
             gameOver.interactable = true;
+            FadeInGameOverScreen();
 
-            StartCoroutine(Fade(gameOver, 1f, 1f));
-        }
-
-        private static IEnumerator Fade(CanvasGroup canvasGroup, float to, float delay = 0f)
-        {
-            yield return new WaitForSeconds(delay);
-
-            var elapsed = 0f;
-            var duration = 0.5f;
-            var from = canvasGroup.alpha;
-
-            while (elapsed < duration)
+            void FadeInGameOverScreen()
             {
-                canvasGroup.alpha = Mathf.Lerp(from, to, elapsed / duration);
-                elapsed += Time.deltaTime;
-                yield return null;
+                const float delay = 1f;
+                const float duration = 0.5f;
+                var gameOverFadeSeq = DOTween.Sequence();
+                gameOverFadeSeq.SetDelay(delay);
+                gameOverFadeSeq.Append(gameOver.DOFade(1f, duration));
             }
-
-            canvasGroup.alpha = to;
         }
 
         public void IncreaseScore(int points)
         {
-            SetScore(_score + points);
+            SetScore(Score + points);
         }
 
         private void SetScore(int score)
         {
-            var prevScore = _score;
-            _score = score;
+            var prevScore = Score;
+            Score = score;
             SaveHighScore();
             
             var tweenId = GetInstanceID();
             DOTween.Kill(tweenId);
             
             const float duration = 0.5f;
-            var counter = (float) _score;
+            var counter = (float) Score;
             DOTween.To(UpdateAnimCounter, prevScore, score, duration)
                 .OnUpdate(UpdateLabelText)
                 .OnComplete(FinalizeLabelText)
@@ -141,17 +134,17 @@ namespace PH.Game
                 
             void UpdateAnimCounter(float x) => counter = x;
             void UpdateLabelText() => scoreText.text = Mathf.RoundToInt(counter).ToString(CultureInfo.InvariantCulture);
-            void FinalizeLabelText() => scoreText.text = _score.ToString();
+            void FinalizeLabelText() => scoreText.text = Score.ToString();
         }
 
         private void SaveHighScore()
         {
             var highScore = LoadHighScore();
             
-            if (_score <= highScore) 
+            if (Score <= highScore) 
                 return;
             
-            PlayerPrefs.SetInt(HighScoreKey, _score);
+            PlayerPrefs.SetInt(HighScoreKey, Score);
             OnHighScore?.Invoke(highScore);
         }
 
@@ -159,7 +152,11 @@ namespace PH.Game
         private int LoadHighScore()
         {
             var localHighScore = PlayerPrefs.GetInt(HighScoreKey, 0);
+            var remoteHighScore = 0;
+            
+#if UNITY_IOS
             var remoteHighScore = _cloudKit.GetHighScore();
+#endif
 
             return Mathf.Max(localHighScore, remoteHighScore);
         }

@@ -1,7 +1,6 @@
 namespace PH.Game
 {
     using System;
-    using System.Collections;
     using System.Globalization;
     using Application;
     using DG.Tweening;
@@ -13,16 +12,17 @@ namespace PH.Game
 
     public class Tile : MonoBehaviour
     {
-        public TileState State { get; private set; }
-        public TileState PreviousState { get; private set; }
         public TileCell Cell { get; private set; }
+        public TileState State { get; private set; }
+        private TileState PreviousState { get; set; }
         public bool Locked { get; set; }
-    
+
+        private Action _onStateChanged;
+        
         [SerializeField] private Image _background;
         [SerializeField] private TextMeshProUGUI _text;
         [SerializeField] private Shadow _shadow;
-
-        private Action _onStateChanged;
+        [SerializeField] private AnimationCurve _punchScaleCurve;
 
         private void Awake()
         {
@@ -51,20 +51,24 @@ namespace PH.Game
             transform.position = cell.transform.position;
         }
 
-        [SerializeField] private AnimationCurve _punchScaleCurve;
         
         public void SetState(TileState state)
         {
             PreviousState = State;
             State = state;
             _onStateChanged?.Invoke();
-            
-            var logValue = Mathf.Log(state.number, 2);
-            var animScale01 = Mathf.Clamp01(_punchScaleCurve.Evaluate(logValue));
-            var punchMagnitude = Mathf.Lerp(0.05f, 0.1f, animScale01);
-            var durationMagnitude = Mathf.Lerp(0.1f, 0.2f, animScale01);
-            var vibratoMagnitude = Mathf.RoundToInt(Mathf.Lerp(1, 10, animScale01));
-            transform.DOPunchScale(Vector3.one * punchMagnitude, durationMagnitude, vibratoMagnitude, 1f);
+            TilePunchAnimation();
+
+            void TilePunchAnimation()
+            {
+                var logValue = Mathf.Log(state.number, 2);
+                var animScale01 = Mathf.Clamp01(_punchScaleCurve.Evaluate(logValue));
+                var punchMagnitude = Mathf.Lerp(0.1f, 0.2f, animScale01);
+                var durationMagnitude = Mathf.Lerp(0.2f, 0.4f, animScale01);
+                var vibratoMagnitude = Mathf.RoundToInt(Mathf.Lerp(1, 10, animScale01));
+                const Ease ease = Ease.InOutExpo;
+                transform.DOPunchScale(Vector3.one * punchMagnitude, durationMagnitude, vibratoMagnitude, 1f).SetEase(ease);
+            }
         }
     
         public void MoveTo(TileCell cell)
@@ -75,7 +79,7 @@ namespace PH.Game
             Cell = cell;
             Cell.Tile = this;
 
-            Animate(cell.transform.position, false);
+            AnimateMoveTo(cell.transform.position, false);
         }
     
         public void Merge(TileCell cell, Action onMerge)
@@ -86,13 +90,16 @@ namespace PH.Game
             Cell = null;
             cell.Tile.Locked = true;
     
-            Animate(cell.transform.position, true, onMerge);
+            AnimateMoveTo(cell.transform.position, true, onMerge);
         }
     
-        private void Animate(Vector3 to, bool merging, Action onMerge = null)
+        private void AnimateMoveTo(Vector3 to, bool merging, Action onMerge = null)
         {
-            const float duration = 0.07f;
-            transform.DOMove(to, duration).OnComplete(OnMoveComplete);
+            const float duration = 0.12f;
+            var ease = merging ? Ease.OutBack : Ease.OutExpo;
+            transform.DOMove(to, duration)
+                .SetEase(ease)
+                .OnComplete(OnMoveComplete);
 
             void OnMoveComplete()
             {
@@ -122,6 +129,7 @@ namespace PH.Game
                 SetValueLabelImmediate();
             else 
                 SetValueLabelAnimated();
+            
 
             void SetValueLabelImmediate()
             {

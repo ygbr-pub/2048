@@ -4,8 +4,7 @@ namespace PH.Game
     
     public class SfxManager : MonoBehaviour
     {
-        [SerializeField]
-        private AudioSource _mergeSfx;
+        [SerializeField] private AudioSource _mergeSfx;
 
         private bool _doMergeSfx;
         
