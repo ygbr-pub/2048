@@ -116,7 +116,7 @@ namespace PH.Game
             _shadow.effectColor = activeThemePalette.GetActiveValue(shadowId).Value;
 
             var hasPreviousState = PreviousState != null;
-            var hasMinimumValueDistance = hasPreviousState && State.number - PreviousState.number < 4;
+            var hasMinimumValueDistance = hasPreviousState && State.number - PreviousState.number >= 4;
 
             if (!hasMinimumValueDistance) 
                 SetValueLabelImmediate();
