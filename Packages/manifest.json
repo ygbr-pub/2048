@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.harumak.upalette": "https://github.com/Haruma-K/uPalette.git?path=/Assets/uPalette",
+    "com.hovelhouse.cloudkit": "file:../com.hovelhouse.cloudkit@1.1.9",
     "com.unity.addressables": "1.19.19",
     "com.unity.ide.rider": "3.0.27",
     "com.unity.inputsystem": "1.5.1",

@@ -7,6 +7,12 @@
       "dependencies": {},
       "hash": "9886838e184406d3846139fd9196db2b5fdec4b7"
     },
+    "com.hovelhouse.cloudkit": {
+      "version": "file:../com.hovelhouse.cloudkit@1.1.9",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.unity.addressables": {
       "version": "1.19.19",
       "depth": 0,
