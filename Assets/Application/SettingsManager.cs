@@ -11,7 +11,7 @@
         public static Action OnThemeChanged;
 
         private Palette<Color> ColorPalette => PaletteStore.Instance.ColorPalette;
-        private const ColorTheme DefaultTheme = ColorTheme.DarkMode;
+        private const ColorTheme DefaultTheme = ColorTheme.MintPastel;
         private ColorTheme _activeTheme;
 
         
