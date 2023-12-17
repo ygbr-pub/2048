@@ -32,7 +32,8 @@ namespace PH.Game
         - Blurs?
         - Particles?
     */
-    
+
+    using System;
     using System.Collections;
     using System.Globalization;
     using DG.Tweening;
@@ -44,6 +45,9 @@ namespace PH.Game
         private const string HighScoreKey = "highscore";
 
         public static GameManager Instance { get; private set; }
+        public static Action<int> OnHighScore;
+
+        [SerializeField] private CloudKitManager _cloudKit;
 
         [SerializeField] private TileBoard board;
         [SerializeField] private CanvasGroup gameOver;
@@ -128,12 +132,9 @@ namespace PH.Game
             var tweenId = GetInstanceID();
             DOTween.Kill(tweenId);
             
-            var duration = 0.5f;
+            const float duration = 0.5f;
             var counter = (float) _score;
-            DOTween.To(UpdateAnimCounter,
-                    prevScore,
-                    score,
-                    duration)
+            DOTween.To(UpdateAnimCounter, prevScore, score, duration)
                 .OnUpdate(UpdateLabelText)
                 .OnComplete(FinalizeLabelText)
                 .SetId(tweenId);                
@@ -147,14 +148,20 @@ namespace PH.Game
         {
             var highScore = LoadHighScore();
             
-            if (_score > highScore) 
-                PlayerPrefs.SetInt(HighScoreKey, _score);
+            if (_score <= highScore) 
+                return;
+            
+            PlayerPrefs.SetInt(HighScoreKey, _score);
+            OnHighScore?.Invoke(highScore);
         }
 
 
-        private static int LoadHighScore()
+        private int LoadHighScore()
         {
-            return PlayerPrefs.GetInt(HighScoreKey, 0);
+            var localHighScore = PlayerPrefs.GetInt(HighScoreKey, 0);
+            var remoteHighScore = _cloudKit.GetHighScore();
+
+            return Mathf.Max(localHighScore, remoteHighScore);
         }
 
     }
