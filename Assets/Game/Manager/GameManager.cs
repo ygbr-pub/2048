@@ -4,7 +4,6 @@ namespace PH.Game
     - Tapping on tiles is soundboard/springy. Just a fun easter-egg I suppose.
     - Prefab-ify scene objects
     - Keyboard Input
-    - Experiment with non-linear easing in our animations
     - CloudKit: KVS Score Saving/Reading
     - Find + Add Audio Effects
     - Haptics
