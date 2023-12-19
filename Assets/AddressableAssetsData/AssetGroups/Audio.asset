@@ -16,15 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 1586a366ce4b96f4a9b5e962ec412246
-  m_SerializeEntries:
-  - m_GUID: 7b33fde819564274f820e1d1882c0d90
-    m_Address: SFX_UI_Notification_2
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 6f49e54e36cb80b4bbbee3c8af0274a2
-    m_Address: SFX_Object_Place_Big_1
-    m_ReadOnly: 0
-    m_SerializedLabels: []
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 466f556845657a84984bf9e1a7987619, type: 2}
   m_SchemaSet:
