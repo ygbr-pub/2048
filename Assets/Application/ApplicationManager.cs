@@ -8,7 +8,7 @@
 
         private void Awake()
         {
-            Application.targetFrameRate = _targetFrameRate;
+            Application.targetFrameRate = Screen.currentResolution.refreshRate;
         }
     }
 }
