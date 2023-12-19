@@ -172,7 +172,7 @@ namespace PH.Game
             var remoteHighScore = 0;
             
 #if UNITY_IOS
-            var remoteHighScore = _cloudKit.GetHighScore();
+            remoteHighScore = _cloudKit.GetHighScore();
 #endif
 
             return Mathf.Max(localHighScore, remoteHighScore);

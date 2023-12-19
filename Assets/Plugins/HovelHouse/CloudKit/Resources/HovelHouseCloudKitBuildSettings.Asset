@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58d01773f6ffd4e51b62a507f7698062, type: 3}
   m_Name: HovelHouseCloudKitBuildSettings
   m_EditorClassIdentifier: 
-  EnableCloudKit: 0
-  EnableKeyVaueStorage: 1
+  EnableCloudKit: 1
+  EnableKeyVaueStorage: 0
   EnableDocumentStorage: 0
   AddDefaultContainers: 1
   CustomContainers: []
@@ -26,5 +26,5 @@ MonoBehaviour:
   PlistPath: 
   EntitlementsPath: 
   EnableCloudKitNotifications: 1
-  apsEnvironment: 1
+  apsEnvironment: 0
   BackgroundModes: 256
