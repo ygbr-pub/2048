@@ -32,6 +32,16 @@ namespace PH.Game
         - Better Transitions
         - Blurs?
         - Particles?
+    - Object Pooling
+    - Abstract away a lot of core systems for reuse
+    */
+    
+    /* Licensed Assets
+        - DoTween Pro           -> PrimeTween? Maybe a no-alloc tween library
+        - AudioSFX              -> Swap or self-produce
+        - Procedural Image      -> 9-Slice Sprites
+        - CloudKit              -> Strip Functionality
+        - uPalette              -> Develop our own fork
     */
 
     using System;
@@ -83,9 +93,17 @@ namespace PH.Game
 
             HideGameOver();
             board.ClearBoard();
-            board.CreateTile();
-            board.CreateTile();
-            board.enabled = true;
+
+            var spawnSeq = DOTween.Sequence();
+            spawnSeq.AppendInterval(0.2f);
+            spawnSeq.AppendCallback(SpawnTile);
+            spawnSeq.AppendInterval(0.2f);
+            spawnSeq.AppendCallback(SpawnTile);
+            spawnSeq.OnComplete(OnSpawnSequenceCompleted);
+
+            void SpawnTile() => board.CreateTile();
+
+            void OnSpawnSequenceCompleted() => board.enabled = true;
         }
 
         private void HideGameOver()

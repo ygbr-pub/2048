@@ -85,17 +85,24 @@ namespace PH.Game
                 }
             }
 
-            if (!mergeOccured || !mergeStreakOccured) MergeStreakValue = MergeStreakCounter = 0;
-            if (mergeStreakOccured) MergeStreakCounter++;
+            // If we merged but it wasn't an increment to a streak, reset the counter. Otherwise, increment the streak.
+            if (!mergeStreakOccured)
+                MergeStreakValue = MergeStreakCounter = 0;
+            else 
+                MergeStreakCounter++;
             
-            if (hasBoardStateChanged) YieldForBoardStateChange();
+            if (hasBoardStateChanged) 
+                YieldForBoardStateChange();
 
+            
             void YieldForBoardStateChange()
             {
                 _waitingForStateChange = true;
 
+                // Need to do a bogus tween because it seems that an empty tween with only a delay may not fire.
                 const float delay = 0.1f;
-                DOTween.Sequence().SetDelay(delay).OnComplete(OnDelayCompleted);
+                DOTween.To(x => _ = x, 0f, 1f, delay)
+                    .OnComplete(OnDelayCompleted);
 
                 void OnDelayCompleted()
                 {

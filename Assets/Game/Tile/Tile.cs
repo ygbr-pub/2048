@@ -9,6 +9,7 @@ namespace PH.Game
     using UnityEngine.UI;
     using uPalette.Generated;
     using uPalette.Runtime.Core;
+    using Random = UnityEngine.Random;
 
     public class Tile : MonoBehaviour
     {
@@ -17,12 +18,13 @@ namespace PH.Game
         private TileState PreviousState { get; set; }
         public bool Locked { get; set; }
 
-        private Action _onStateChanged;
-        
         [SerializeField] private Image _background;
         [SerializeField] private TextMeshProUGUI _text;
         [SerializeField] private Shadow _shadow;
         [SerializeField] private AnimationCurve _punchScaleCurve;
+        
+        private Action _onStateChanged;
+        private bool _isAnimatingTap;
 
         private void Awake()
         {
@@ -34,6 +36,39 @@ namespace PH.Game
         {
             SettingsManager.OnThemeChanged -= OnThemeChanged;
             _onStateChanged -= OnStateChanged;
+        }
+
+        
+        public void Event_OnButtonClicked()
+        {
+            if (_isAnimatingTap)
+                return;
+            
+            TileTapAnimation();
+
+            void TileTapAnimation()
+            {
+                var punchMagnitude = Random.Range(-0.1f, -0.2f);
+                var durationMagnitude = Random.Range(0.05f, 0.15f);
+                var vibratoMagnitude = Mathf.RoundToInt(Random.Range(1, 10));
+                var punchPositionDir = new Vector3(0, -1, 0);
+                var punchPositionMagnitude = Random.Range(5f, 10f);
+                const Ease ease = Ease.InOutExpo;
+                transform.DOPunchScale(Vector3.one * punchMagnitude, durationMagnitude, vibratoMagnitude)
+                    .SetEase(ease)
+                    .OnStart(OnTapAnimStarted)
+                    .OnComplete(OnTapAnimCompleted);
+                
+                transform.DOPunchPosition(punchPositionDir * punchPositionMagnitude, durationMagnitude, vibratoMagnitude)
+                    .SetEase(ease);
+
+                _text.transform.DOPunchScale(Vector3.one * punchMagnitude, durationMagnitude, vibratoMagnitude)
+                    .SetEase(ease)
+                    .SetDelay(0.1f);
+            }
+
+            void OnTapAnimStarted() => _isAnimatingTap = true;
+            void OnTapAnimCompleted() => _isAnimatingTap = false;
         }
         
         private void OnThemeChanged() => RefreshColors();
@@ -67,7 +102,11 @@ namespace PH.Game
                 var durationMagnitude = Mathf.Lerp(0.2f, 0.4f, animScale01);
                 var vibratoMagnitude = Mathf.RoundToInt(Mathf.Lerp(1, 10, animScale01));
                 const Ease ease = Ease.InOutExpo;
-                transform.DOPunchScale(Vector3.one * punchMagnitude, durationMagnitude, vibratoMagnitude, 1f).SetEase(ease);
+                transform.DOPunchScale(Vector3.one * punchMagnitude, durationMagnitude, vibratoMagnitude, 1f)
+                    .SetEase(ease);
+                _text.transform.DOPunchScale(Vector3.one * punchMagnitude, durationMagnitude, vibratoMagnitude, 1f)
+                    .SetEase(ease)
+                    .SetDelay(0.2f);
             }
         }
     
