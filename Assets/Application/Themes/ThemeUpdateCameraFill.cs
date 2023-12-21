@@ -1,14 +1,15 @@
-namespace PH.Theme
+using UnityEngine;
+
+namespace PH
 {
     using Application;
-    using UnityEngine;
-    using UnityEngine.UI;
     using uPalette.Generated;
     using uPalette.Runtime.Core;
 
-    public class ThemeUpdateEventGraphic : MonoBehaviour
+    // TODO: ThemUpdaters should have a BaseClass<T> to cut back on duplication of code.
+    public class ThemeUpdateCameraFill : MonoBehaviour
     {
-        [SerializeField] private Graphic _graphic;
+        [SerializeField] private Camera _camera;
         [SerializeField] private ColorEntry _paletteElement;
             
         private void Awake()
@@ -23,18 +24,18 @@ namespace PH.Theme
 
         private void OnThemeChanged()
         {
-            if (_graphic == null)
+            if (_camera == null)
                 return;
             
             var activeThemePalette = PaletteStore.Instance.ColorPalette;
             var elementId = _paletteElement.ToEntryId();
-            _graphic.color = activeThemePalette.GetActiveValue(elementId).Value;
+            _camera.backgroundColor = activeThemePalette.GetActiveValue(elementId).Value;
         }
 
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            _graphic = GetComponent<Graphic>();
+            _camera = GetComponent<Camera>();
         }
 #endif
     }

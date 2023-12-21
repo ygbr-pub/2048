@@ -18,9 +18,11 @@ namespace PH.Game
         private TileGrid _grid;
         private List<Tile> _tiles;
         private bool _waitingForStateChange;
+        private int _instanceId;
 
         private void Awake()
         {
+            _instanceId = GetInstanceID();
             _grid = GetComponentInChildren<TileGrid>();
             _tiles = new(16);
         }
@@ -40,7 +42,12 @@ namespace PH.Game
             InputManager.OnSwipeRight -= OnSwipeRight;
             InputManager.OnSwipeLeft -= OnSwipeLeft;
         }
-        
+
+        private void OnDestroy()
+        {
+            DOTween.Kill(_instanceId);
+        }
+
         private void OnSwipeUp() => Move(Vector2Int.up, 0, 1, 1, 1);
         private void OnSwipeDown() => Move(Vector2Int.down, 0, 1, _grid.Height - 2, -1);
         private void OnSwipeRight() => Move(Vector2Int.right, _grid.Width - 2, -1, 0, 1);
@@ -99,23 +106,35 @@ namespace PH.Game
             {
                 _waitingForStateChange = true;
 
-                // Need to do a bogus tween because it seems that an empty tween with only a delay may not fire.
-                const float delay = 0.1f;
-                DOTween.To(x => _ = x, 0f, 1f, delay)
-                    .OnComplete(OnDelayCompleted);
+                const float yieldDelay = 0.1f;
+                var yieldSeq = DOTween.Sequence();
+                yieldSeq.PrependInterval(yieldDelay);
+                yieldSeq.OnComplete(OnYieldCompleted);
+                yieldSeq.SetId(_instanceId);
 
-                void OnDelayCompleted()
+                void OnYieldCompleted()
                 {
                     _waitingForStateChange = false;
                     
                     foreach (var tile in _tiles) 
                         tile.Locked = false;
 
-                    if (_tiles.Count != _grid.Size) 
-                        CreateTile();
+                    if (_tiles.Count != _grid.Size)
+                    {
+                        const float spawnDelay = 0.2f;
+                        var spawnSeq = DOTween.Sequence();
+                        spawnSeq.PrependInterval(spawnDelay);
+                        spawnSeq.OnComplete(OnSpawnDelayComplete);
+                        spawnSeq.SetId(_instanceId);
+                    }
 
-                    if (CheckForGameOver()) 
-                        GameManager.Instance.ShowGameOver();
+                    void OnSpawnDelayComplete()
+                    {
+                        CreateTile();
+                        var isGameOver = CheckForGameOver();
+                        if (isGameOver) 
+                            GameManager.Instance.ShowGameOver();
+                    }
                 }
             }
         }
@@ -179,10 +198,8 @@ namespace PH.Game
         private int IndexOf(TileState state)
         {
             for (var i = 0; i < tileStates.Length; i++)
-            {
                 if (state == tileStates[i])
                     return i;
-            }
             return -1;
         }
 

@@ -91,7 +91,7 @@ MonoBehaviour:
           - 5b1a6eea-114a-42c1-af4b-c6d97f729865
           - 3edc3998-28e7-45c1-832b-7a9616df1639
           _values:
-          - _value: {r: 0.73333335, g: 0.6784314, b: 0.627451, a: 1}
+          - _value: {r: 0.73333335, g: 0.6784314, b: 0.627451, a: 0}
           - _value: {r: 0.9215687, g: 0.9686275, b: 0.92549026, a: 0}
           - _value: {r: 0, g: 0, b: 0, a: 0}
       - _id: 0e1dcb02-def3-42cc-9b45-dcecc9d8504f
@@ -103,7 +103,7 @@ MonoBehaviour:
           - 5b1a6eea-114a-42c1-af4b-c6d97f729865
           - 3edc3998-28e7-45c1-832b-7a9616df1639
           _values:
-          - _value: {r: 0.80392164, g: 0.7568628, b: 0.7058824, a: 1}
+          - _value: {r: 0.80392164, g: 0.7568628, b: 0.7058824, a: 0}
           - _value: {r: 0.81960785, g: 0.90588236, b: 0.83137256, a: 0}
           - _value: {r: 0, g: 0, b: 0, a: 0}
       - _id: 8538d10d-094e-414f-960e-37239aa22078
@@ -458,7 +458,7 @@ MonoBehaviour:
       - 2e0ed1df-c682-4843-aff2-10b1d5949dbd
       - 5b1a6eea-114a-42c1-af4b-c6d97f729865
       - 3edc3998-28e7-45c1-832b-7a9616df1639
-    _activeThemeId: 3edc3998-28e7-45c1-832b-7a9616df1639
+    _activeThemeId: 5b1a6eea-114a-42c1-af4b-c6d97f729865
   _gradientPalette:
     _entries:
       _keys: []

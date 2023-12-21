@@ -25,9 +25,11 @@ namespace PH.Game
         
         private Action _onStateChanged;
         private bool _isAnimatingTap;
+        private int _instanceId;
 
         private void Awake()
         {
+            _instanceId = GetInstanceID();
             SettingsManager.OnThemeChanged += OnThemeChanged;
             _onStateChanged += OnStateChanged;
         }
@@ -57,14 +59,17 @@ namespace PH.Game
                 transform.DOPunchScale(Vector3.one * punchMagnitude, durationMagnitude, vibratoMagnitude)
                     .SetEase(ease)
                     .OnStart(OnTapAnimStarted)
-                    .OnComplete(OnTapAnimCompleted);
+                    .OnComplete(OnTapAnimCompleted)
+                    .SetId(_instanceId);
                 
                 transform.DOPunchPosition(punchPositionDir * punchPositionMagnitude, durationMagnitude, vibratoMagnitude)
-                    .SetEase(ease);
+                    .SetEase(ease)
+                    .SetId(_instanceId);
 
                 _text.transform.DOPunchScale(Vector3.one * punchMagnitude, durationMagnitude, vibratoMagnitude)
                     .SetEase(ease)
-                    .SetDelay(0.1f);
+                    .SetDelay(0.1f)
+                    .SetId(_instanceId);
             }
 
             void OnTapAnimStarted() => _isAnimatingTap = true;
@@ -103,10 +108,12 @@ namespace PH.Game
                 var vibratoMagnitude = Mathf.RoundToInt(Mathf.Lerp(1, 10, animScale01));
                 const Ease ease = Ease.InOutExpo;
                 transform.DOPunchScale(Vector3.one * punchMagnitude, durationMagnitude, vibratoMagnitude, 1f)
-                    .SetEase(ease);
+                    .SetEase(ease)
+                    .SetId(_instanceId);
                 _text.transform.DOPunchScale(Vector3.one * punchMagnitude, durationMagnitude, vibratoMagnitude, 1f)
                     .SetEase(ease)
-                    .SetDelay(0.2f);
+                    .SetDelay(0.2f)
+                    .SetId(_instanceId);
             }
         }
     
@@ -138,7 +145,8 @@ namespace PH.Game
             var ease = merging ? Ease.OutBack : Ease.OutExpo;
             transform.DOMove(to, duration)
                 .SetEase(ease)
-                .OnComplete(OnMoveComplete);
+                .OnComplete(OnMoveComplete)
+                .SetId(_instanceId);
 
             void OnMoveComplete()
             {
@@ -146,7 +154,11 @@ namespace PH.Game
                     return;
                 
                 onMerge?.Invoke();
-                Destroy(gameObject);                
+                // TODO: Stand-in for object pooling
+                var discardedTile = gameObject;
+                discardedTile.SetActive(false);
+                DOTween.Kill(discardedTile);
+                Destroy(discardedTile, 1f);            
             }
         }
     
@@ -186,7 +198,8 @@ namespace PH.Game
                 
                 DOTween.To(UpdateAnimCounter, from, to, duration)
                     .OnUpdate(UpdateLabelText)
-                    .OnComplete(FinalizeLabelText);                
+                    .OnComplete(FinalizeLabelText)
+                    .SetId(_instanceId);            
                 
                 void UpdateAnimCounter(float x) => counter = x;
                 void UpdateLabelText() => _text.text = Mathf.RoundToInt(counter).ToString(CultureInfo.InvariantCulture);
