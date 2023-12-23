@@ -10,7 +10,6 @@ namespace PH.Game
 
          private void Awake()
          {
-             GameManager.OnHighScore += SetHighScore;
          }
 
          private void Start()

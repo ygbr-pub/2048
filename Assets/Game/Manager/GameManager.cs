@@ -97,11 +97,9 @@ namespace PH.Game
             var spawnSeq1 = DOTween.Sequence();
             spawnSeq1.AppendInterval(0.2f);
             spawnSeq1.AppendCallback(SpawnTile);
-            
-            var spawnSeq2 = DOTween.Sequence();
             spawnSeq1.AppendInterval(0.2f);
             spawnSeq1.AppendCallback(SpawnTile);
-            spawnSeq2.OnComplete(OnSpawnSequenceCompleted);
+            spawnSeq1.OnComplete(OnSpawnSequenceCompleted);
 
             void SpawnTile() => board.CreateTile();
 
@@ -173,10 +171,7 @@ namespace PH.Game
         {
             var localHighScore = PlayerPrefs.GetInt(HighScoreKey, 0);
             var remoteHighScore = 0;
-            
-#if UNITY_IOS
-            remoteHighScore = _cloudKit.GetHighScore();
-#endif
+
 
             return Mathf.Max(localHighScore, remoteHighScore);
         }
