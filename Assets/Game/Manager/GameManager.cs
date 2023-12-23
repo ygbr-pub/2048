@@ -34,6 +34,12 @@ namespace PH.Game
         - Particles?
     - Object Pooling
     - Abstract away a lot of core systems for reuse
+    - Game-over screen transition:
+        - Cross-hatch animation that uses dominant colour in column/row
+    - Play with merge/spawn effects:
+        - Spawn is square punch
+        - Vertical Merge is Horizontal Stretch
+        - Horizontal Merge is Vertical Stretch
     */
     
     /* Licensed Assets
@@ -42,6 +48,7 @@ namespace PH.Game
         - Procedural Image      -> 9-Slice Sprites
         - CloudKit              -> Strip Functionality
         - uPalette              -> Develop our own fork
+        *Note: we can leave 3rd party endpoints in, we just need to wrap them in processor flags. E.g ENABLE_PROCEDURAL_IMAGE, ENABLE_CLOUD_KIT
     */
 
     using System;
