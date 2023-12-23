@@ -142,7 +142,7 @@ namespace PH.Game
         private void AnimateMoveTo(Vector3 to, bool merging, Action onMerge = null)
         {
             const float duration = 0.12f;
-            var ease = merging ? Ease.OutBack : Ease.OutExpo;
+            var ease = merging ? Ease.OutExpo : Ease.OutBack;
             transform.DOMove(to, duration)
                 .SetEase(ease)
                 .OnComplete(OnMoveComplete)
