@@ -107,7 +107,15 @@ namespace PH.Game
                 var durationMagnitude = Mathf.Lerp(0.2f, 0.4f, animScale01);
                 var vibratoMagnitude = Mathf.RoundToInt(Mathf.Lerp(1, 10, animScale01));
                 const Ease ease = Ease.InOutExpo;
-                transform.DOPunchScale(Vector3.one * punchMagnitude, durationMagnitude, vibratoMagnitude, 1f)
+                var punchV3 = Random.value >= 0.5 ? Vector3.up : Vector3.right;
+
+                // Do a uniform punch is spawning rather than a merged state change.
+                if (PreviousState == null)
+                {
+                    punchV3 = Vector3.one;
+                }
+                
+                transform.DOPunchScale(punchV3 * punchMagnitude, durationMagnitude, vibratoMagnitude, 1f)
                     .SetEase(ease)
                     .SetId(_instanceId);
                 _text.transform.DOPunchScale(Vector3.one * punchMagnitude, durationMagnitude, vibratoMagnitude, 1f)
